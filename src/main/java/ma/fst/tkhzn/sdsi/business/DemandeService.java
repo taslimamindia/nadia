@@ -26,9 +26,9 @@ public class DemandeService {
     @Autowired
     UtilisateurRepository utilisateurRepository;
     @RequestMapping(path = "/addDemande", method = RequestMethod.POST)
-    public void addDemande(@RequestBody DemandeRequest demande){
+    public void addDemande(@RequestBody DemandeRequest demande,Principal login){
         String code = UUID.randomUUID().toString();
-        Utilisateur user=utilisateurRepository.findByLogin(demande.getLogin());
+        Utilisateur user=utilisateurRepository.findByLogin(login.getName());
         if (demande.getType().equals("Imprimante")){
 
             Imprimante_d imprimante_d=new Imprimante_d(code,demande.getQteD(),user,0,demande.getImprimante_d().getMarque(),

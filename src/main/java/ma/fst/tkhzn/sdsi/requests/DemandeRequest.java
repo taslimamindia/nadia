@@ -10,6 +10,5 @@ public class DemandeRequest {
     private Ordinateur_d ordinateur_d;
     private Imprimante_d imprimante_d;
     private String type;
-    private String login;
     private int qteD;
 }
