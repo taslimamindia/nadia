@@ -96,7 +96,7 @@ public class DemandeService {
         }
     }
     @RequestMapping(path = "/listerDemandes" ,method = RequestMethod.GET)
-    public List<DemandeResponse> listerDemandes(){
+    public void listerDemandes(){
         List<Demande> demandes=demandeRepository.findAll();
 
         List<DemandeResponse> demandeResponses=new ArrayList<>();
@@ -108,7 +108,6 @@ public class DemandeService {
 
         }
         System.out.println(demandeResponses);
-        return demandeResponses;
     }
     @RequestMapping(path = "/addAppel", method = RequestMethod.GET)
     public void addAppel(){
