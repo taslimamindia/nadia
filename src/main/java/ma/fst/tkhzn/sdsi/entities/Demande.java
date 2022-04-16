@@ -21,6 +21,7 @@ public class Demande {
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
+    private int id_appel;
 
     public Demande(Utilisateur user_dem) {
         this.user_dem = user_dem;

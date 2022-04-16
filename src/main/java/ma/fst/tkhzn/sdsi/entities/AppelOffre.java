@@ -18,16 +18,10 @@ public class AppelOffre {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String ress_ds;
-    private  int QteD;
     @CreationTimestamp
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
-    public AppelOffre(String ress_ds, int qteD) {
-        this.ress_ds = ress_ds;
-        QteD = qteD;
-    }
 /*private ArrayList <Demande> listeDemande;
 
     public boolean addDemande(Demande demande) {

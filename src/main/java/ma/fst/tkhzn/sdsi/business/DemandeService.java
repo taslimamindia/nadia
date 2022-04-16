@@ -94,7 +94,7 @@ public class DemandeService {
             }
 
         }
-    } /*
+    }
     @RequestMapping(path = "/listerDemandes" ,method = RequestMethod.GET)
     public List<DemandeResponse> listerDemandes(){
         List<Demande> demandes=demandeRepository.findAll();
@@ -104,21 +104,20 @@ public class DemandeService {
         {
             List<Ressource_d> ressource_ds=new ArrayList<>();
             ressource_ds=ressource_dRepository.listerRess_d(d.getId());
-
             demandeResponses.add(new DemandeResponse(ressource_ds,d.getUser_dem()));
 
         }
         System.out.println(demandeResponses);
-        return  demandeResponses;
+        return demandeResponses;
     }
-
-    @RequestMapping(path = "/addAppel", method = RequestMethod.POST)
-    public void addAppel(@RequestBody List<DemandeResponse> demandeResponses){
-        for (DemandeResponse dr:demandeResponses){
-            for(Ressource_d r:dr.getRessource_ds()){
-                appelOffreRep.save(new AppelOffre(r.getCode(),r.getQteD()));
+    @RequestMapping(path = "/addAppel", method = RequestMethod.GET)
+    public void addAppel(){
+        appelOffreRep.save(new AppelOffre());
+        int id_Appel= appelOffreRep.getId();
+        List<Demande> ds=demandeRepository.findAll();
+        for (Demande d:ds){
+            demandeRepository.setIdAppel(id_Appel,d.getId());
             }
         }
+    }
 
-    }*/
-}
