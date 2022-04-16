@@ -72,18 +72,29 @@ public class DemandeService {
         return demandeResponse.getRessource_ds();
     }
 
-    /*@RequestMapping(path = "/saveDemande", method = RequestMethod.POST)
+   @RequestMapping(path = "/saveDemande", method = RequestMethod.POST)
     public  void  saveDemande(@RequestBody List<DemandeRequest> d, Principal usr) {
 
         ressource_dRepository.deleteRessource_d();
         demandeRepository.save(new Demande(utilisateurRepository.findByLogin(usr.getName())));
         int id = demandeRepository.getId();
         for (DemandeRequest de : d) {
-            de.setId_demande(id);
-            System.out.println(de);
-            addDemande(de, usr);
+            if(de.getType().equals("imprimante")){
+                Imprimante_d imprimante_d=de.getImprimante_d();
+                imprimante_d.setId_demande(id);
+                de.setImprimante_d(imprimante_d);
+                System.out.println(de);
+                addDemande(de, usr);
+            }else{
+                Ordinateur_d ordinateur_d=de.getOrdinateur_d();
+                ordinateur_d.setId_demande(id);
+                de.setOrdinateur_d(ordinateur_d);
+                System.out.println(de);
+                addDemande(de, usr);
+            }
+
         }
-    }
+    } /*
     @RequestMapping(path = "/listerDemandes" ,method = RequestMethod.GET)
     public List<DemandeResponse> listerDemandes(){
         List<Demande> demandes=demandeRepository.findAll();
