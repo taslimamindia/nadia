@@ -28,7 +28,7 @@ public class Ordinateur_d extends Ressource_d implements Serializable{
     //constructeur
 
 
-    public Ordinateur_d(String code, int QteD, Utilisateur user, int id_demande, String cpu, int disque_d, float ecran, String marque, int ram) {
+    public Ordinateur_d(Long code, int QteD, Utilisateur user, int id_demande, String cpu, int disque_d, float ecran, String marque, int ram) {
         super(code, QteD, user, id_demande);
         this.cpu = cpu;
         this.disque_d = disque_d;

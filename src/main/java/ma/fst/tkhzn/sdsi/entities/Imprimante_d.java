@@ -17,8 +17,8 @@ public class Imprimante_d extends Ressource_d implements Serializable {
     private float resolution;
     private float vitesse;
 
-    public Imprimante_d(String code, int QteD, Utilisateur user, int id_demande, String marque, float resolution, float vitesse) {
-        super(code, QteD, user, id_demande);
+    public Imprimante_d( int QteD, Utilisateur user, int id_demande, String marque, float resolution, float vitesse) {
+        super( QteD, user, id_demande);
         this.marque = marque;
         this.resolution = resolution;
         this.vitesse = vitesse;
@@ -48,4 +48,5 @@ public class Imprimante_d extends Ressource_d implements Serializable {
     public void setVitesse(float vitesse) {
         this.vitesse = vitesse;
     }
+
 }

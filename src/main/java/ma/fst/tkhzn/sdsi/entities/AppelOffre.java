@@ -1,9 +1,34 @@
 package ma.fst.tkhzn.sdsi.entities;
 
-import java.util.ArrayList;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+
+
+@Entity
+@AllArgsConstructor
+@NoArgsConstructor
 public class AppelOffre {
-    /*private ArrayList <Demande> listeDemande;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String ress_ds;
+    private  int QteD;
+    @CreationTimestamp
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date date;
+
+    public AppelOffre(String ress_ds, int qteD) {
+        this.ress_ds = ress_ds;
+        QteD = qteD;
+    }
+/*private ArrayList <Demande> listeDemande;
 
     public boolean addDemande(Demande demande) {
         if (listeDemande.isEmpty())

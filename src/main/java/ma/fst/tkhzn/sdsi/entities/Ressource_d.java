@@ -8,7 +8,6 @@ package ma.fst.tkhzn.sdsi.entities;
         import lombok.AllArgsConstructor;
         import lombok.Data;
         import lombok.NoArgsConstructor;
-        import lombok.ToString;
 
 @Entity
 @Data
@@ -20,10 +19,17 @@ public class Ressource_d implements Serializable {
      *
      */
     private static final long serialVersionUID = 1L;
-    @Id
-    private String code;
+    @Id@GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long code;
 
-    private int QteD;
+    private int qteD;
+
+    public Ressource_d(int qteD, Utilisateur user, int id_demande) {
+        this.qteD = qteD;
+        this.user = user;
+        this.id_demande = id_demande;
+    }
+
     @ManyToOne
     @JoinColumn(name="id_user")
     private Utilisateur user;

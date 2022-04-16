@@ -10,12 +10,16 @@ import org.springframework.data.repository.query.Param;
 import javax.transaction.Transactional;
 import java.util.List;
 
-public interface Ressource_dRepository extends JpaRepository<Ressource_d, String> {
+public interface Ressource_dRepository extends JpaRepository<Ressource_d, Long> {
 
     @Query("select R from Ressource_d R where R.user.login = :x")
     public List<Ressource_d> findRess_d(@Param("x")String login);
     @Transactional
-@Modifying
+    @Modifying
     @Query("DELETE from Ressource_d r where r.id_demande=0")
     public void deleteRessource_d();
+
+    @Query("select r from Ressource_d r where r.id_demande=:x")
+    public List<Ressource_d> listerRess_d(@Param("x") int id_demande);
+
 }

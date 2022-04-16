@@ -62,8 +62,6 @@ public class Utilisateur implements UserDetails{
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private List<Ressource_d> ressource_ds ;
 
-	/*@OneToMany(mappedBy = "user_dem")
-	private Collection<Demande> demandes;*/
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
