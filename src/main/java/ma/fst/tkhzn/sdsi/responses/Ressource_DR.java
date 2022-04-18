@@ -3,15 +3,14 @@ package ma.fst.tkhzn.sdsi.responses;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.io.Serializable;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Data @NoArgsConstructor @ToString
 public class Ressource_DR implements Serializable {
     private Long code;
-    private UtilisateurR user;
+//    private UtilisateurR user;
     private int qteD;
     private int id_demande;
 

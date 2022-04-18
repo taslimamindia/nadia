@@ -12,7 +12,10 @@ import org.springframework.data.repository.query.Param;
 import ma.fst.tkhzn.sdsi.entities.Ressource;
 
 public interface RessourceRepository extends JpaRepository<Ressource, Long>{
-	
+
+	@Query("select R.code from Ressource R")
+	public List<String> findLastId();
+
 	@Query("select R from Ressource R where R.estAffecter=true")
     public List<Ressource> findAllDisp();
 

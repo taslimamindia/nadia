@@ -20,20 +20,14 @@ import java.util.List;
 public class ProjetTkhznSdsiApplication {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
-
 	@Autowired
 	DepartementRepository departementRepository;
-	
 	@Autowired
 	private UtilisateurRepository utilisateurRepository;
     @Autowired
 	RessourceRepository ressourcerepository;
 	
 	public static void main(String[] args) {
-
 		SpringApplication.run(ProjetTkhznSdsiApplication.class, args);
 	}
-    
-
-
 }

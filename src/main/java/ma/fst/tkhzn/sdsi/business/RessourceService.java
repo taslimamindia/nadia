@@ -49,6 +49,12 @@ public class RessourceService {
     @RequestMapping(path = "/addRess", method = RequestMethod.POST)
 	public void addRess(@RequestBody RessourceRequest resReq) {
 		System.err.println(resReq);
+		Long idmax = 0L;
+		List<String> ids = ressourcerepository.findLastId();
+		for(String id : ids) {
+			long v = Long.parseLong(id.substring(1, id.length()));
+			if(v > idmax) idmax = v;
+		}
         if(resReq.isNouv()==true) {
 			Fournisseur fournisseur = fournisseurrepository.findByLogin(resReq.getFournisseur().getLogin());
 			fournisseur.setGerant(resReq.getFournisseur().getGerant());
@@ -56,19 +62,26 @@ public class RessourceService {
 			fournisseur.setNomSocite(resReq.getFournisseur().getNomSocite());
             fournisseurrepository.save(fournisseur);
         }
-
+		idmax = idmax + 1;
 		if(resReq.getType().equals("imprimante")) {
-			Imprimante imp=resReq.getImp();
-			imp.setFournisseur(resReq.getFournisseur());
-			imp.setLivrer(true);
-			imprimanteRepository.save(resReq.getImp());
+			for(int i = 0; i < resReq.getQte(); i++) {
+				Imprimante imp = new Imprimante(resReq.getImp());
+				imp.setCode("I" + idmax);
+				imp.setFournisseur(resReq.getFournisseur());
+				imp.setLivrer(true);
+				imprimanteRepository.save(imp);
+				idmax = idmax + 1;
+			}
 		}
 		else {
-			Ordinateur ord=resReq.getOrdi();
-			ord.setFournisseur(resReq.getFournisseur());
-			ord.setLivrer(true);
-			ordinateurRepository.save(resReq.getOrdi());
-
+			for(int i = 0; i < resReq.getQte(); i++) {
+				Ordinateur ord = new Ordinateur(resReq.getOrdi());
+				ord.setCode("O" + idmax);
+				ord.setFournisseur(resReq.getFournisseur());
+				ord.setLivrer(true);
+				ordinateurRepository.save(ord);
+				idmax = idmax + 1;
+			}
 		}
 	}
 	

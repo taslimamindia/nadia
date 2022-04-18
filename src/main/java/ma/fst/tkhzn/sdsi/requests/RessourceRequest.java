@@ -12,6 +12,7 @@ public class RessourceRequest {
 	Imprimante imp;
 	String type;
 	Fournisseur fournisseur;
+	int qte;
 	boolean nouv; //1 nouv 0:anc
 
 }

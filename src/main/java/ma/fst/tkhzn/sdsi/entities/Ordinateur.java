@@ -22,10 +22,6 @@ public class Ordinateur extends Ressource implements Serializable{
     private String marque;
     private int ram;
 
-
-    //constructeur
-
-
     public Ordinateur(String code, Date dateLiv, int dureeGarantie, boolean estAffecter, Fournisseur fournisseur, Utilisateur responsable, String cpu, int dd, float ecran, String marque, int ram) {
         super(code, dateLiv, dureeGarantie, estAffecter, fournisseur);
         this.cpu = cpu;
@@ -35,51 +31,50 @@ public class Ordinateur extends Ressource implements Serializable{
         this.ram = ram;
     }
 
+    public Ordinateur(Ordinateur ord) {
+        super(ord.getCode(), ord.getDateLiv(), ord.getDureeGarantie(), ord.isEstAffecter(), ord.getFournisseur());
+        this.cpu = ord.getCpu();
+        this.dd = ord.getDd();
+        this.ecran = ord.getEcran();
+        this.marque = ord.getMarque();
+        this.ram = ord.getRam();
+    }
 
     public String getCpu() {
         return cpu;
     }
 
-
     public void setCpu(String cpu) {
         this.cpu = cpu;
     }
-
 
     public int getDd() {
         return dd;
     }
 
-
     public void setDd(int dd) {
         this.dd = dd;
     }
-
 
     public float getEcran() {
         return ecran;
     }
 
-
     public void setEcran(float ecran) {
         this.ecran = ecran;
     }
-
 
     public String getMarque() {
         return marque;
     }
 
-
     public void setMarque(String marque) {
         this.marque = marque;
     }
 
-
     public int getRam() {
         return ram;
     }
-
 
     public void setRam(int ram) {
         this.ram = ram;

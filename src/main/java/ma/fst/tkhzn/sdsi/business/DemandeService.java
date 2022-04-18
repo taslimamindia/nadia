@@ -30,6 +30,12 @@ public class DemandeService {
     UtilisateurRepository utilisateurRepository;
     @Autowired
     DemandeRepository demandeRepository;
+
+    @RequestMapping(path = "/ajouterDemande", method = RequestMethod.POST)
+    public void ajouterDemande(@RequestBody DemandeRequest demande,Principal login){
+        System.out.println(demande);
+    }
+
     @RequestMapping(path = "/addDemande", method = RequestMethod.POST)
     public void addDemande(@RequestBody DemandeRequest demande,Principal login){
         System.err.println(demande);
@@ -45,6 +51,7 @@ public class DemandeService {
             ordinateur_dRepository.save(ord);
         }
     }
+
     @RequestMapping(path = "/listerBesoins", method = RequestMethod.GET)
     public List<UserRess> listerBesoins(Principal login){
         List<UserRess> userRess=new ArrayList<>();
@@ -53,22 +60,21 @@ public class DemandeService {
         for(Utilisateur usr:users){
             for (Imprimante_d imp:imprimate_dRepository.findRess_d(usr.getLogin())){
                 ImprimanteR impr=new ImprimanteR(imp);
-                impr.setUser(new UtilisateurR(usr));
-                userRess.add(new UserRess(imp.getUser().getLogin(),imp.getCode(),"imprimante",null, impr));
+//                impr.setUser(new UtilisateurR(usr));
+                userRess.add(new UserRess(imp.getUser().getNom() + " " + imp.getUser().getPrenom(), imp.getUser().getLogin(),imp.getCode(),"imprimante",null, impr));
             }
             for(Ordinateur_d ord:ordinateur_dRepository.findOrd_d(usr.getLogin())){
                 OrdinateurR ordr=new OrdinateurR(ord);
-                ordr.setUser(new UtilisateurR(usr));
-                userRess.add(new UserRess(ord.getUser().getLogin(),ord.getCode(),"ordinateur",ordr,null));
+//                ordr.setUser(new UtilisateurR(usr));
+                userRess.add(new UserRess(ord.getUser().getNom() + " " + ord.getUser().getPrenom(), ord.getUser().getLogin(),ord.getCode(),"ordinateur",ordr,null));
             }
         }
-
+        for(UserRess u: userRess) System.out.println(u);
         return userRess;
     }
 
    @RequestMapping(path = "/saveDemande", method = RequestMethod.POST)
     public  void  saveDemande(@RequestBody List<DemandeRequest> d, Principal usr) {
-
         ressource_dRepository.deleteRessource_d();
         demandeRepository.save(new Demande(utilisateurRepository.findByLogin(usr.getName())));
         int id = demandeRepository.getId();

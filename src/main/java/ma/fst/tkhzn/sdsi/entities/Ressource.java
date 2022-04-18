@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @Entity
-@Data @NoArgsConstructor @ToString
+@NoArgsConstructor @ToString
 @Inheritance(strategy = InheritanceType.JOINED)
 public class Ressource implements Serializable{
 	/**
@@ -44,6 +44,54 @@ public class Ressource implements Serializable{
 		this.dureeGarantie = dureeGarantie;
 	}
 
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public Date getDateLiv() {
+		return dateLiv;
+	}
+
+	public void setDateLiv(Date dateLiv) {
+		this.dateLiv = dateLiv;
+	}
+
+	public int getDureeGarantie() {
+		return dureeGarantie;
+	}
+
+	public void setDureeGarantie(int dureeGarantie) {
+		this.dureeGarantie = dureeGarantie;
+	}
+
+	public boolean isEstAffecter() {
+		return estAffecter;
+	}
+
+	public void setEstAffecter(boolean estAffecter) {
+		this.estAffecter = estAffecter;
+	}
+
+	public boolean isLivrer() {
+		return livrer;
+	}
+
+	public void setLivrer(boolean livrer) {
+		this.livrer = livrer;
+	}
+
+	public Fournisseur getFournisseur() {
+		return fournisseur;
+	}
+
+	public void setFournisseur(Fournisseur fournisseur) {
+		this.fournisseur = fournisseur;
+	}
+
 	public Ressource(String code, Date dateLiv, int dureeGarantie, boolean estAffecter, Fournisseur fournisseur) {
 		this.code = code;
 		this.dateLiv = dateLiv;
@@ -70,8 +118,6 @@ public class Ressource implements Serializable{
 		this.fournisseur = fournisseur;
 	}
 
-
-
 	@ManyToOne
 	@JoinColumn(name="fournisseur", insertable=false,updatable=false )
 	private Fournisseur fournisseur;
@@ -79,7 +125,5 @@ public class Ressource implements Serializable{
 //	@ManyToOne
 //	@JoinColumn(name="responsable", insertable=false,updatable=false )
 //	private Utilisateur responsable;
-	
 
-	
 }

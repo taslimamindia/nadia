@@ -31,5 +31,11 @@ public class Imprimante extends Ressource implements Serializable{
 		this.vitesse = vitesse;
 	}
 
+	public Imprimante(Imprimante imp) {
+		super(imp.getCode(), imp.getDateLiv(), imp.getDureeGarantie(), imp.isEstAffecter(), imp.getFournisseur());
+		this.marque = imp.getMarque();
+		this.resolution = imp.getResolution();
+		this.vitesse = imp.getVitesse();
+	}
 
 }

@@ -49,4 +49,5 @@ public class Imprimante_d extends Ressource_d implements Serializable {
         this.vitesse = vitesse;
     }
 
+    
 }

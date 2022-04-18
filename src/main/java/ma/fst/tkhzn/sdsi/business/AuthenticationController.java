@@ -52,10 +52,9 @@ public class AuthenticationController {
 		
 		String jwtToken=jWTTokenHelper.generateToken(user.getUsername());
 		
-		LoginResponse response=new LoginResponse();
+		LoginResponse response = new LoginResponse();
 		response.setToken(jwtToken);
-		
-
+		response.setRole(user.getRole().toUpperCase());
 		return ResponseEntity.ok(response);
 	}
 	
