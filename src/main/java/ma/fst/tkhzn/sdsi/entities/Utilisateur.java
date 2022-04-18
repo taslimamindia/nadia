@@ -59,9 +59,14 @@ public class Utilisateur implements UserDetails{
 		return login;
 	}
 
+	public Utilisateur(Utilisateur user){
+		this.login=user.getLogin();
+		this.nom=user.getNom();
+		this.departement=user.getDepartement();
+		this.ressource_ds=new ArrayList<>();
+	}
 	@OneToMany(mappedBy = "user",fetch = FetchType.EAGER)
 	private List<Ressource_d> ressource_ds ;
-
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {

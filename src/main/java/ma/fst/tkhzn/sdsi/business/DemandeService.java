@@ -1,19 +1,15 @@
 package ma.fst.tkhzn.sdsi.business;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import ma.fst.tkhzn.sdsi.entities.*;
 import ma.fst.tkhzn.sdsi.repositories.*;
 import ma.fst.tkhzn.sdsi.requests.DemandeRequest;
-import ma.fst.tkhzn.sdsi.responses.DemandeResponse;
+import ma.fst.tkhzn.sdsi.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.security.Principal;
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping(value = {"api/demandeservice"})
@@ -35,22 +31,6 @@ public class DemandeService {
     @Autowired
     DemandeRepository demandeRepository;
     @RequestMapping(path = "/addDemande", method = RequestMethod.POST)
-    /*public void addDemande(@RequestBody DemandeRequest demande,Principal login){
-        Utilisateur user=utilisateurRepository.findByLogin(login.getName());
-        if (demande.getType().equals("Imprimante")){
-
-            Imprimante_d imprimante_d=new Imprimante_d(demande.getQteD(),user,demande.getId_demande(),demande.getImprimante_d().getMarque(),
-                    demande.getImprimante_d().getResolution(),demande.getImprimante_d().getVitesse());
-            System.out.println(imprimante_d.toString());
-            imprimate_dRepository.save(imprimante_d);
-
-        }else {
-            Ordinateur_d ordinateur_d=new Ordinateur_d(demande.getQteD(),user,demande.getId_demande(),demande.getOrdinateur_d().getCpu(),demande.getOrdinateur_d().getDisque_d(),
-                    demande.getOrdinateur_d().getEcran(),demande.getOrdinateur_d().getMarque(),demande.getOrdinateur_d().getRam());
-            ordinateur_dRepository.save(ordinateur_d);
-        }
-    }*/
-
     public void addDemande(@RequestBody DemandeRequest demande,Principal login){
         System.err.println(demande);
         Utilisateur user = utilisateurRepository.findByLogin(login.getName());
@@ -66,10 +46,24 @@ public class DemandeService {
         }
     }
     @RequestMapping(path = "/listerBesoins", method = RequestMethod.GET)
-    public  List<Ressource_d> listerBesoins(Principal user){
-        DemandeResponse demandeResponse =new DemandeResponse();
-        demandeResponse.setRessource_ds(ressource_dRepository.findRess_d(user.getName()));
-        return demandeResponse.getRessource_ds();
+    public List<UserRess> listerBesoins(Principal login){
+        List<UserRess> userRess=new ArrayList<>();
+        Utilisateur user=utilisateurRepository.findByLogin(login.getName());
+        List<Utilisateur> users=utilisateurRepository.findBydepartement(user.getDepartement());
+        for(Utilisateur usr:users){
+            for (Imprimante_d imp:imprimate_dRepository.findRess_d(usr.getLogin())){
+                ImprimanteR impr=new ImprimanteR(imp);
+                impr.setUser(new UtilisateurR(usr));
+                userRess.add(new UserRess(imp.getUser().getLogin(),imp.getCode(),"imprimante",null, impr));
+            }
+            for(Ordinateur_d ord:ordinateur_dRepository.findOrd_d(usr.getLogin())){
+                OrdinateurR ordr=new OrdinateurR(ord);
+                ordr.setUser(new UtilisateurR(usr));
+                userRess.add(new UserRess(ord.getUser().getLogin(),ord.getCode(),"ordinateur",ordr,null));
+            }
+        }
+
+        return userRess;
     }
 
    @RequestMapping(path = "/saveDemande", method = RequestMethod.POST)
@@ -95,6 +89,7 @@ public class DemandeService {
 
         }
     }
+
     @RequestMapping(path = "/listerDemandes" ,method = RequestMethod.GET)
     public void listerDemandes(){
         List<Demande> demandes=demandeRepository.findAll();
@@ -118,5 +113,6 @@ public class DemandeService {
             demandeRepository.setIdAppel(id_Appel,d.getId());
             }
         }
+
     }
 
