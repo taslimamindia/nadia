@@ -3,6 +3,7 @@ package ma.fst.tkhzn.sdsi.business;
 import ma.fst.tkhzn.sdsi.entities.*;
 import ma.fst.tkhzn.sdsi.repositories.*;
 import ma.fst.tkhzn.sdsi.requests.DemandeRequest;
+import ma.fst.tkhzn.sdsi.requests.Validation;
 import ma.fst.tkhzn.sdsi.responses.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -52,6 +53,23 @@ public class DemandeService {
         }
     }
 
+    @RequestMapping(path = "/envoiDemande", method = RequestMethod.POST)
+    public void envoiDemande(@RequestBody List<Validation> validations){
+        for(Validation validation: validations) {
+            System.out.println(validation);
+        }
+    }
+    @RequestMapping(path = "/supprimeDemande", method = RequestMethod.POST)
+    public void deleteDemande(@RequestBody String code){
+        Imprimante_d imp = imprimate_dRepository.findByCode(Long.parseLong(code));
+        if(imp == null) {
+            Ordinateur_d ord = ordinateur_dRepository.findByCode(Long.parseLong(code));
+            ordinateur_dRepository.delete(ord);
+        }
+        else imprimate_dRepository.delete(imp);
+
+    }
+
     @RequestMapping(path = "/listerBesoins", method = RequestMethod.GET)
     public List<UserRess> listerBesoins(Principal login){
         List<UserRess> userRess=new ArrayList<>();
@@ -69,7 +87,7 @@ public class DemandeService {
                 userRess.add(new UserRess(ord.getUser().getNom() + " " + ord.getUser().getPrenom(), ord.getUser().getLogin(),ord.getCode(),"ordinateur",ordr,null));
             }
         }
-        for(UserRess u: userRess) System.out.println(u);
+//        for(UserRess u: userRess) System.out.println(u);
         return userRess;
     }
 
@@ -110,6 +128,7 @@ public class DemandeService {
         }
         System.out.println(demandeResponses);
     }
+
     @RequestMapping(path = "/addAppel", method = RequestMethod.GET)
     public void addAppel(){
         appelOffreRep.save(new AppelOffre());

@@ -13,4 +13,7 @@ public interface Imprimate_dRepository extends JpaRepository<Imprimante_d,String
     public String getCodeImp(@Param("x") Float resolution, @Param("y") Float vitesse, @Param("t") String marque);*/
    @Query("select R from Imprimante_d R where R.user.login = :x")
    public List<Imprimante_d> findRess_d(@Param("x")String login);
+
+   @Query("select R from Imprimante_d R where R.code = :x")
+   public Imprimante_d findByCode(@Param("x")Long code);
 }
