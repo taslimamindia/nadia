@@ -37,6 +37,7 @@ public class DemandeService {
         System.out.println(demande);
     }
 
+    //
     @RequestMapping(path = "/addDemande", method = RequestMethod.POST)
     public void addDemande(@RequestBody DemandeRequest demande,Principal login){
         System.err.println(demande);
@@ -53,12 +54,14 @@ public class DemandeService {
         }
     }
 
+    // Add Demande
     @RequestMapping(path = "/envoiDemande", method = RequestMethod.POST)
     public void envoiDemande(@RequestBody List<Validation> validations){
         for(Validation validation: validations) {
             System.out.println(validation);
         }
     }
+    // Terminer
     @RequestMapping(path = "/supprimeDemande", method = RequestMethod.POST)
     public void deleteDemande(@RequestBody String code){
         Imprimante_d imp = imprimate_dRepository.findByCode(Long.parseLong(code));
@@ -70,6 +73,22 @@ public class DemandeService {
 
     }
 
+    @RequestMapping(path = "/listerMesDemandes", method = RequestMethod.GET)
+    public List<UserRess> listerMesDemandes(Principal login){
+        List<UserRess> userRess=new ArrayList<>();
+        Utilisateur user = utilisateurRepository.findByLogin(login.getName());
+        for (Imprimante_d imp:imprimate_dRepository.findRess_d(user.getLogin())){
+            ImprimanteR impr=new ImprimanteR(imp);
+            userRess.add(new UserRess(imp.getUser().getNom() + " " + imp.getUser().getPrenom(), imp.getUser().getLogin(),imp.getCode(),"imprimante",null, impr));
+        }
+        for(Ordinateur_d ord:ordinateur_dRepository.findOrd_d(user.getLogin())){
+            OrdinateurR ordr=new OrdinateurR(ord);
+            userRess.add(new UserRess(ord.getUser().getNom() + " " + ord.getUser().getPrenom(), ord.getUser().getLogin(),ord.getCode(),"ordinateur",ordr,null));
+        }
+        return userRess;
+    }
+
+    // Terminer
     @RequestMapping(path = "/listerBesoins", method = RequestMethod.GET)
     public List<UserRess> listerBesoins(Principal login){
         List<UserRess> userRess=new ArrayList<>();
@@ -124,7 +143,6 @@ public class DemandeService {
             List<Ressource_d> ressource_ds=new ArrayList<>();
             ressource_ds=ressource_dRepository.listerRess_d(d.getId());
             demandeResponses.add(new DemandeResponse(ressource_ds,d.getUser_dem()));
-
         }
         System.out.println(demandeResponses);
     }

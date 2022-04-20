@@ -48,12 +48,11 @@ public class UserService {
 	
 	@GetMapping("/userInfo")
 	public ResponseEntity<?> getUserInfo(Principal user){
-		System.err.println(user.getName() + " methode getuserinfo Dans la classe authentificationcontroller");
-
-		System.out.println(iUserRepository.findByLogin(user.getName()));
 		Utilisateur userObj=(Utilisateur) userDetailsService.loadUserByUsername(user.getName());
 		
 		UserInfo userInfo=new UserInfo();
+		userInfo.setFirstName(userObj.getNom());
+		userInfo.setLastName(userObj.getPrenom());
 		userInfo.setUserName(userObj.getLogin());
 		userInfo.setRoles(userObj.getAuthorities().toArray());
 		
